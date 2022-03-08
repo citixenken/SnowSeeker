@@ -21,7 +21,7 @@ struct Resort: Codable, Identifiable {
     let facilities: [String]
     
     static let allResorts: [Resort] = Bundle.main.decode("resorts.json")
-    static let example = allResorts[0]
+    static let example = allResorts[2]
     
     //using typecasting
 //    static let example = (Bundle.main.decode("resorts.json") as [Resort])[0]
