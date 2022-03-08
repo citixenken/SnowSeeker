@@ -10,6 +10,8 @@ import SwiftUI
 struct ResortView: View {
     @Environment(\.horizontalSizeClass) var sizeClass
     @Environment(\.dynamicTypeSize) var typeSize
+    @EnvironmentObject var favorites: Favorites
+    
     let resort: Resort
     
     @State private var selectedFacility: Facility?
@@ -43,10 +45,10 @@ struct ResortView: View {
                         .padding(.vertical)
                     Text("Facilities")
                         .font(.headline)
-//                    Text(resort.facilities.joined(separator: ", "))
+                    //                    Text(resort.facilities.joined(separator: ", "))
                     
-//                    Text(resort.facilities, format: .list(type: .and))
-//                        .padding(.vertical)
+                    //                    Text(resort.facilities, format: .list(type: .and))
+                    //                        .padding(.vertical)
                     HStack {
                         ForEach(resort.facilityTypes) { facility in
                             Button {
@@ -58,6 +60,15 @@ struct ResortView: View {
                             }
                         }
                     }
+                    Button(favorites.contains(resort) ? "Remove from Favorites" : "Add to Favorites") {
+                        if favorites.contains(resort) {
+                            favorites.remove(resort)
+                        } else {
+                            favorites.add(resort)
+                        }
+                    }
+                    .buttonStyle(.bordered)
+                    .padding()
                 }
                 .padding(.horizontal)
             }
@@ -73,6 +84,9 @@ struct ResortView: View {
 
 struct ResortView_Previews: PreviewProvider {
     static var previews: some View {
-        ResortView(resort: Resort.example)
+        NavigationView {
+            ResortView(resort: Resort.example)
+                .environmentObject(Favorites())
+        }
     }
 }
