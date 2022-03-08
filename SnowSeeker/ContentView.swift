@@ -37,9 +37,23 @@ struct ContentView: View {
                 }
             }
             .navigationTitle("Resorts")
+            
+            WelcomeView()
         }
     }
 }
+
+//getting rid of slide over approach
+
+//extension View {
+//    @ViewBuilder func phoneOnlyStackNavigationView() -> some View {
+//        if UIDevice.current.userInterfaceIdiom == .phone {
+//            self.navigationViewStyle(.stack)
+//        } else {
+//            self
+//        }
+//    }
+//}
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
