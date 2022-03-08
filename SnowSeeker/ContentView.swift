@@ -8,25 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var searchText = ""
-    let allModels = ["4-Runner", "Auris", "Avensis", "Avensis Combi", "Avensis Van Verso", "Aygo", "Camry", "Carina", "Celica", "Corolla", "Corolla Combi", "Corolla sedan", "Corolla Verso", "FJ Cruiser", "GT86", "Hiace", "Hiace Van", "Highlander", "Hilux", "Land Cruiser", "MR2", "Paseo", "Picnic", "Prius", "RAV4", "Sequoia", "Starlet", "Supra", "Tundra", "Urban Cruiser", "Verso", "Yaris", "Yaris Verso"]
-
-        var body: some View {
-            NavigationView {
-                List(filteredNames, id: \.self) { name in
-                    Text(name)
-                }
-                .searchable(text: $searchText, prompt: "Search model")
-                .navigationTitle("Search Models")
-            }
-        }
+    let resorts: [Resort] = Bundle.main.decode("resorts.json")
     
-    var filteredNames: [String] {
-        if searchText.isEmpty {
-            return allModels
-        } else {
-            //return allModels.filter { $0.contains(searchText) }
-            return allModels.filter { $0.localizedCaseInsensitiveContains(searchText) }
+    var body: some View {
+        NavigationView {
+            List(resorts) { resort in
+                NavigationLink {
+                    Text(resort.name)
+                } label: {
+                    Image(resort.country)
+                        .resizable()
+                        .scaledToFill()
+                        .frame(width: 40, height: 25)
+                        .clipShape(
+                            RoundedRectangle(cornerRadius: 5)
+                        )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(.black, lineWidth: 1)
+                        )
+                    
+                    VStack(alignment: .leading) {
+                        Text(resort.name)
+                            .font(.headline)
+                        Text("\(resort.runs) slopes")
+                            .foregroundColor(.secondary)
+                    }
+                }
+            }
+            .navigationTitle("Resorts")
         }
     }
 }
